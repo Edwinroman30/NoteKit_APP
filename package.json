@@ -14,10 +14,14 @@
     "url": "git+https://github.com/Edwinroman30/NoteKit_APP.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Edwin Roman",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Edwinroman30/NoteKit_APP/issues"
   },
-  "homepage": "https://github.com/Edwinroman30/NoteKit_APP#readme"
+  "homepage": "https://github.com/Edwinroman30/NoteKit_APP#readme",
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3"
+  }
 }
