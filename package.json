@@ -1,13 +1,14 @@
 {
   "name": "notekit",
   "version": "1.0.0",
-  "description": "��#\u0000 \u0000N\u0000o\u0000t\u0000e\u0000K\u0000i\u0000t\u0000_\u0000A\u0000P\u0000P\u0000\r\u0000 \u0000",
-  "main": "index.js",
+  "description": "Notes apps.",
+  "main": "./backend/app.js",
   "directories": {
     "doc": "doc"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ./app.js",
+    "serve": "nodemon ./app.js"
   },
   "repository": {
     "type": "git",
@@ -22,6 +23,7 @@
   "homepage": "https://github.com/Edwinroman30/NoteKit_APP#readme",
   "dependencies": {
     "dotenv": "^16.0.0",
-    "express": "^4.17.3"
+    "express": "^4.17.3",
+    "mongoose": "^6.2.2"
   }
 }
