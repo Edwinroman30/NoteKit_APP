@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "node ./app.js",
-    "serve": "nodemon ./app.js"
+    "dev": "nodemon ./app.js"
   },
   "repository": {
     "type": "git",
@@ -22,8 +22,14 @@
   },
   "homepage": "https://github.com/Edwinroman30/NoteKit_APP#readme",
   "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.0",
+    "ejs": "^3.1.6",
     "express": "^4.17.3",
+    "express-validator": "^6.14.0",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.2.2"
   }
 }
