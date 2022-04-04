@@ -1,6 +1,9 @@
 require('dotenv').config();
+const cors  = require('cors');
 const express = require('express');
-const {router}= require('../routes/routes');
+const dbConnection = require('../database/config'); 
+const path = require('path');
+const cookieParser = require('cookie-parser');
 
 class Server{
 
@@ -9,23 +12,63 @@ class Server{
         //Instances and properties.
          this.app = express();
          this.port = process.env.PORT | 8080;
-         this.apiPath = '/api/';
+         this.apiNote = '/v1/api/note';
+         this.apiUser = '/v1/api/user';
+         this.apiAuth = '/v1/api/auth';
 
+         
+         //DB Connection
+         this.dbConnectionServer();
 
-        //Middleware
-        this.middleware();
+         //Middleware
+         this.middlewares();
 
-        //DB Connection
-        this.dbConnection();
+         //Routes
+         this.routes();
+         
+
     }
 
-    async dbConnection(){
-        return null;
+    async dbConnectionServer(){
+        await dbConnection();
     }
 
-    middleware(){
+    middlewares(){
+
+        //CORS.
+        const corsOptionsDefault = {
+            "origin": "*",
+            "methods": "GET",
+            "preflightContinue": false,
+            "optionsSuccessStatus": 204
+        }
+
+        this.app.use( cors(corsOptionsDefault) );
+        
+        // let’s you use the cookieParser in your application
+        this.app.use( cookieParser() );
+        
+        //JSON PARSER.
         this.app.use( express.json() );
-        this.app.use(this.apiPath, router);
+        
+        //Body-parsers data.
+        this.app.use( express.urlencoded({extended : false}) );
+        
+        //Static Content.
+        this.app.use( express.static('public') );
+
+        //Setting the view-engine
+        this.app.set( 'view engine', 'ejs' );
+        this.app.set( 'views', path.join( process.cwd(), '/views' ) );
+
+    }
+
+    routes(){
+      
+        this.app.use( this.apiUser, require('../routes/usersRoutes') );
+        this.app.use( this.apiAuth, require('../routes/loginRoutes') );
+        this.app.use( this.apiNote, require('../routes/notesRoutes') );
+        this.app.use('/', require('../routes/showingViews') );
     }
 
     listen(){
