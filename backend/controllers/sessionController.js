@@ -11,13 +11,17 @@ const loginFunction = async (req = request, res = response) => {
         const userBody = req.body;
     
         const trustedUser = await User.findOne( { email: userBody.email } ).exec();
-    
+        
+        if(!trustedUser){
+            return res.status(401).send('This user doesnt exist!');
+        }
+
         if(trustedUser.status === false){
-            return res.status(401).json('This account for some reason have been deleted. Please if something is wrong contact to: support@enterprice.com');
+            return res.status(401).json( [{ msg: 'This account for some reason have been deleted. Please if something is wrong contact to: support@enterprice.com' }]);
         }
     
         if( !bcrypt.compareSync(userBody.password, trustedUser.password) ){
-            return res.status(401).json('Incorrect password, please verify it!');
+            return res.status(401).json( [{msg : 'Incorrect password, please verify it!'}] );
         }
     
         const token = await generateToken(trustedUser.id);
@@ -31,14 +35,14 @@ const loginFunction = async (req = request, res = response) => {
             sameSite: 'lax'
         });
         
-        return res.redirect('home');
+        return res.redirect('/home');
         
         //generate token
         //return res.status(200).json( { msg: 'Success Log In!', token } );
             
     } catch (error) {
         
-        return res.json( {error} );
+        return res.json( {error, msg: 'Incorrecto' } );
 
     }
 
