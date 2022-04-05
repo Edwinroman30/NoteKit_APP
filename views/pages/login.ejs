@@ -1,9 +1,20 @@
+    <%- include('../partials/header') %>
+    
+    <div class="alert alert-danger d-none" role="alert" id="alert-error">
+       
+    </div>
 
     <h1>Login</h1>
 
-    <form action="" method="post" id="form">
-        <input type="email" name="email" id="email">
-        <input type="password" name="password" id="password">
+    <form action="" method="post" id="form" class="form">
+        
+        <div class="form-group">
+            <input type="email" name="email" id="email">
+        </div>
+        <div class="form-group">
+            <input type="password" name="password" id="password">
+        </div>
+
         <input type="submit" value="send...">
     </form>
 
@@ -16,21 +27,34 @@
         $form.addEventListener('submit', async (e) => {
 
                 e.preventDefault();
-    
-                const res = window.fetch('http://localhost:8120/v1/api/auth/login', {
-                    method: 'POST',
-                    body: JSON.stringify({email: $email.value, password: $pass.value}),
-                    headers: {
-                        "Content-type" : "application/json"
-                 }
-                })
-                .then( data => {
-                    console.log(data);
-                    window.location.replace("http://localhost:8120/home");
-                })
-                .catch( error => {
+                const $alertError = document.getElementById('alert-error');
+
+                try{
+                    
+                    const res = await window.fetch('http://localhost:8120/v1/api/auth/login', {
+                        method: 'POST',
+                        body: JSON.stringify({email: $email.value, password: $pass.value}),
+                        headers: {
+                            "Content-type" : "application/json"
+                         }
+                    });
+
+                   if(res.status > 200){
+                       const err = await res.json();
+                       
+                       $alertError.textContent =  err[0].msg.toString();
+                       console.log(err[0].msg.toString())
+                       $alertError.classList.toggle('d-none');
+                   }else{
+                        window.location.href = "/home";
+                   }
+
+                   return;
+
+                    
+                }catch(error){
                     console.error(error);
-                });
+                }
               
         });
 
