@@ -12,9 +12,11 @@ class Server{
         //Instances and properties.
          this.app = express();
          this.port = process.env.PORT | 8080;
+         this.apiCategories = '/v1/api/category';
          this.apiNote = '/v1/api/note';
          this.apiUser = '/v1/api/user';
          this.apiAuth = '/v1/api/auth';
+
 
          
          //DB Connection
@@ -68,6 +70,7 @@ class Server{
         this.app.use( this.apiUser, require('../routes/usersRoutes') );
         this.app.use( this.apiAuth, require('../routes/loginRoutes') );
         this.app.use( this.apiNote, require('../routes/notesRoutes') );
+        this.app.use( this.apiCategories, require('../routes/categoryRoutes') );
         this.app.use('/', require('../routes/showingViews') );
     }
 
