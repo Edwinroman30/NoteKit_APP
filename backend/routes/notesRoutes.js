@@ -5,6 +5,11 @@ const {getAllNotes,insertNotes,updateNotes,deleteNotes} = require('../controller
 
 router.get('/', getAllNotes);
 
+router.get('/:uid', (req, res) => {
+    console.log('Ruta diferente...')
+    return res.status(200).send('Esta ruta sera atacada con el identificador de la tarjeta.');
+});
+
 router.post('/', insertNotes);
 
 router.put('/', updateNotes);
