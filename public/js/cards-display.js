@@ -1,5 +1,8 @@
 const $cardContainer = document.getElementById('cardContainer');
 
+import { likeFunction } from "./modules/cards-buttons/like.js";
+import {paragraphShorter} from "./modules/helper/paragraphShorter.js";  
+
 
 async function loadCards(){
     
@@ -36,7 +39,7 @@ async function loadCards(){
                             <div class="col-12 col-md-12 col-lg-8">
                                 <div class="card-body">
                                     <h5 class="card-title">${card.title}</h5>
-                                    <p class="card-text">${card.description}</p>
+                                    <p class="card-text">${ paragraphShorter( card.description ) }</p>
                                     <p class="card-text"><small class="text-muted">${card.registrationDate.toString()}</small></p>
                                 </div>
                             </div>
@@ -81,11 +84,10 @@ async function loadCards(){
     }
     catch(error){
 
-       return console.error(new Error(error));
+       console.error(new Error(error))
+       return new Error(error);
        
     }
-
-
 }
 
 loadCards();
@@ -95,10 +97,6 @@ loadCards();
 
 window.document.addEventListener('click', (e)=>{
 
-    if(e.target.getAttribute('id') == 'heart-button'){
-    
-        alert(`A usted le gusto ${e.target.parentElement.parentElement.children[1].children[0].children[0].textContent}`);
-        
-    }            
+   likeFunction(e);
 
 });
