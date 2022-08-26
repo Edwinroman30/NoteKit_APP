@@ -14,3 +14,10 @@ Description: This web application allows you to register a set of phrases, expre
 - Filtering.
 - Pagination.
 - Attach notes. (a field in a table)
+
+### Overview:
+<hr>
+<center>
+<img src="https://github.com/Edwinroman30/NoteKit_APP/blob/main/doc/tablet_phone_version.png" width="100%" heigth="50px">
+</center>
+<hr>

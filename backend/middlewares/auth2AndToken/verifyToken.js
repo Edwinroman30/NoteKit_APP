@@ -9,6 +9,11 @@ const jwtValidationMiddleware = async (req, res, next) =>{
         //const apiKey = req.headers['x-api-key'];
         
         console.log(req.cookies.tokenwp);
+
+        if(req.cookies.tokenwp === undefined){
+           return res.redirect('/login');
+        }
+
         const { uid } = jwt.verify(req.cookies.tokenwp, process.env.JWT_PRIVATE_KEY);
         
         const userMatched = await User.findById( uid ).exec();

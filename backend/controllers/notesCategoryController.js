@@ -1,20 +1,18 @@
 const { request, response } = require('express');
 const Card = require('../models/schemas/cards');
 const CardCategory = require('../models/schemas/cardsCategories');
-const User = require('../models/schemas/user');
 
 const getAllCategory = async (req = request, res = response) =>{
 
     try {
             
-        const cardCategories = await CardCategory.find()
+        const cardCategories = await CardCategory.find( { userId : req.userMatched._id } )
         .populate({
             path: 'userId',
             model: 'User',
             select:
             'name lastName'
         });
-        
 
         res.status(200).json({ data: [...cardCategories], success: true });
         
@@ -23,6 +21,21 @@ const getAllCategory = async (req = request, res = response) =>{
     }
 
 }
+
+const getCategoryById = async (req = request, res = response) =>{
+
+    try {
+
+        const card = await Card.findById( req.params.uid ).exec();
+       
+        return res.status(200).json( {data: card, success: true} );
+      
+    } catch (error) {
+        return res.status(400).json( {error, success: false} );
+    }
+
+}
+
 
 const insertCategory = (req = request, res = response) =>{
 

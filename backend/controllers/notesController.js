@@ -6,8 +6,8 @@ const User = require('../models/schemas/user');
 const getAllNotes = async (req = request, res = response) =>{
 
     try {
-            
-        const cards = await Card.find()
+
+        const cards = await Card.find( { userId : req.userMatched._id }  )
         .populate({
             path: 'userId',
             model: 'User',
@@ -22,6 +22,21 @@ const getAllNotes = async (req = request, res = response) =>{
     }
 
 }
+
+const getNotesById = async (req = request, res = response) =>{
+
+    try {
+
+        const card = await Card.findById( req.params.uid ).exec();
+       
+        return res.status(200).json( {data: card, success: true} );
+      
+    } catch (error) {
+        return res.status(400).json( {error, success: false} );
+    }
+
+}
+
 
 const insertNotes = (req = request, res = response) =>{
 
@@ -46,5 +61,6 @@ module.exports = {
     insertNotes,
     updateNotes,
     deleteNotes,
-    getAllNotes
+    getAllNotes,
+    getNotesById
 }

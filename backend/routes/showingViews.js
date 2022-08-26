@@ -3,7 +3,10 @@ const {jwtValidationMiddleware} = require('../middlewares/index'); //Puedo extra
 
 
 //Just views renders:
-router.get('/home', jwtValidationMiddleware, (req, res) => res.render('pages/home', {title: 'Home'}) );
+router.get('/home', jwtValidationMiddleware, (req, res) => {        
+     res.render('pages/home', {title: 'Home', email: req.userMatched.email});
+});
+
 router.get('/', (req, res) => res.render('pages/welcome', {title: '📘 NoteKitApp'}) );
 router.get('/login', (req, res) => res.render('pages/login', {title: 'Login | 📘 NoteKitApp'}) );
 

@@ -8,9 +8,9 @@ const validationGrabberAsync = async (req, res = response, next) =>{
         const anyError = validationResult(req);
     
         if(!anyError.isEmpty()){
-            return res.status(400).json( anyError.array() );
+            return res.status(401).json( anyError.array() );
         }
-    
+
         next();
 
     } catch (error) {
