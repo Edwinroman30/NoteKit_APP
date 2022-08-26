@@ -8,7 +8,7 @@ const jwtValidationMiddleware = async (req, res, next) =>{
         //JWT
         //const apiKey = req.headers['x-api-key'];
         
-        console.log(req.cookies.tokenwp);
+        //console.log(req.cookies.tokenwp);
 
         if(req.cookies.tokenwp === undefined){
            return res.redirect('/login');
@@ -29,7 +29,6 @@ const jwtValidationMiddleware = async (req, res, next) =>{
         
         //JUGAR CON EL USER
         req.userMatched = userMatched;
-
         next();
 
     } catch (error) {
